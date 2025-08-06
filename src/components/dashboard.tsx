@@ -73,9 +73,30 @@ export default function Dashboard() {
     e.preventDefault();
     if (!newPost.trim()) return;
     
-    // In a real app, this would make an API call
-    toast.success("Post created successfully!");
-    setNewPost("");
+    try {
+      // For now, add to mock data (will be replaced with real API call)
+      const newMockPost = {
+        id: Date.now().toString(),
+        author: {
+          name: session?.user?.name || "You",
+          image: session?.user?.image || "",
+          title: "Healthcare Professional"
+        },
+        content: newPost,
+        timestamp: "Just now",
+        likes: 0,
+        comments: 0,
+        image: null
+      };
+      
+      // Add to beginning of posts array
+      mockPosts.unshift(newMockPost);
+      
+      toast.success("Post created successfully!");
+      setNewPost("");
+    } catch (error) {
+      toast.error("Error creating post");
+    }
   };
 
   const getInitials = (name: string) => {
